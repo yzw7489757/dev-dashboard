@@ -1,0 +1,72 @@
+const { resolve } = require('path')
+const WebpackNotifier = require('webpack-notifier');
+
+const {name} = require('../package.json');
+const base = require('./webpack.base');
+
+const IN_HTTPS = !!process.env.HTTPS;
+
+const devBaseConfig = {
+  ...base,
+  
+  mode: 'development',
+
+  devServer: {
+    disableHostCheck: true,
+    contentBase: resolve(__dirname, '../example'),
+    https: IN_HTTPS,
+    port: 8400,
+    host: '0.0.0.0',
+    stats: 'minimal',
+    historyApiFallback: true
+  },
+
+  devtool: 'cheap-module-eval-source-map',
+
+  externals: {
+    ...base.externals,
+    [name]: {
+      root: name,
+      commonjs2: name,
+      commonjs: name,
+      amd: name,
+    },
+  },
+
+  plugins: [
+    ...base.plugins,
+    new WebpackNotifier({
+      title: name,
+      excludeWarnings: true,
+      skipFirstNotification: true
+    })
+  ]
+};
+
+module.exports = [{
+  ...devBaseConfig,
+
+  entry: {
+    index: resolve(__dirname, '../src/index.tsx'),
+  },
+
+  output: {
+    library: name,
+    libraryTarget: 'umd',
+    filename: '[name].js',
+    path: resolve(__dirname, '../lib')
+  },
+}, {
+  ...devBaseConfig,
+
+  entry: {
+    xindex: resolve(__dirname, '../example/index.tsx'),
+  },
+
+  output: {
+    // library,
+    libraryTarget: 'umd',
+    filename: '[name].js',
+    path: resolve(__dirname, '../lib')
+  },
+}]
