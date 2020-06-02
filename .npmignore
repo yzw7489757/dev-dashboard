@@ -1,0 +1,14 @@
+/src
+/public
+/node_modules/
+.babelrc
+.eslintignore
+.eslintrc.js
+.gitignore
+config-overrides.js
+gulpfile.js
+jsconfig.json
+package-lock.json
+/build/*.png
+/build/*.jpg
+/build/*.ico
