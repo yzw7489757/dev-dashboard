@@ -1,12 +1,8 @@
-import React from "react";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
-import Dashboard from "./layouts/dashboard";
-import "assets/css/material-dashboard-react.css?v=1.9.0";
+import React from 'react'
+import ReactDOM from 'react-dom';
+import MaterialSingle from './entry/App';
 
-const hist = createBrowserHistory();
-
-type IMaterialSingle = {
+type IMaterial = {
   routes: {
     path: string,
     name: string,
@@ -14,17 +10,22 @@ type IMaterialSingle = {
     component: React.ReactNode
   }[],
   title?: React.ReactNode,
-  logo?: React.ReactNode
+  logo?: React.ReactNode,
+
+  [key: string]: any;
 }
 
-export const MaterialSingle:React.SFC<IMaterialSingle> = (props) => {
-  return (
-    <Router history={hist}>
-      <Switch>
-        <Route path="/" component={(p) => <Dashboard {...p} {...props} />} />
-      </Switch>
-    </Router>
-  );
-};
+export const Material = (props: IMaterial, dom: HTMLElement = document.getElementById('root')) => {
+  ReactDOM.render(<MaterialSingle {...props}/>, dom)
+  createLink("https://fonts.googleapis.com/icon?family=Material+Icons")
+  createLink("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+}
 
-export default { MaterialSingle };
+function createLink(href: string) {
+  const icons = document.createElement('link');
+  icons.href = href
+  icons.rel = "stylesheet"
+  document.head.appendChild(icons)
+}
+
+export default Material
