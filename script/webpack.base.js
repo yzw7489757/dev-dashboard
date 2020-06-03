@@ -7,8 +7,8 @@ const base = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      components: resolve(__dirname, '../src/components'),
-      assets: resolve(__dirname, '../src/assets'),
+      "material@components": resolve(__dirname, '../src/material/components'),
+      "material@assets": resolve(__dirname, '../src/material/assets'),
     }
   },
 
@@ -90,7 +90,21 @@ const base = {
 
   plugins: [
     new webpack.BannerPlugin({banner: `${name}@${version}`})
-  ]
+  ],
+  externals:{
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react',
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom',
+    },
+  }
 }
 
 module.exports = base;
