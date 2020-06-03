@@ -2,21 +2,20 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
+import styles from "assets/jss/material-dashboard-react/layouts/dashboardStyle.js";
 import Navbar from "../components/Navbars/Navbar.js";
 import Footer from "../components/Footer/Footer.js";
 import Sidebar from "../components/Sidebar/Sidebar.js";
 import FixedPlugin from "../components/FixedPlugin/FixedPlugin.js";
-
-import styles from "assets/jss/material-dashboard-react/layouts/dashboardStyle.js";
+import '../assets/css/material-dashboard-react.css';
 
 let ps;
 
-const useStyles = makeStyles(styles);
-
-const Dashboard = function Dashboard({ routes, logo, title, ...rest }) {
-  const classes = useStyles();
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+// eslint-disable-next-line react/prop-types
+const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
   const mainPanel = React.createRef();
   const [image, setImage] = React.useState(
     "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg"
@@ -99,4 +98,4 @@ const Dashboard = function Dashboard({ routes, logo, title, ...rest }) {
   );
 };
 
-export default Dashboard;
+export default withStyles(styles)(Dashboard);
