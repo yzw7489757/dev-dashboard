@@ -3,30 +3,37 @@ import { BrowserRouter as Router, NavLink, Switch, Route } from 'react-router-do
 import './index.less';
 
 type RouteItemProps = {
-  label: string,
+  name: string,
   icon: React.ReactNode,
   path: string,
-  App: React.FunctionComponent | React.ComponentClass
+  component: React.FunctionComponent | React.ComponentClass
 }
-export type SimpleProps = { title?: string, routes: Array<RouteItemProps> }
-const Simple: React.SFC<SimpleProps> = ({ title, routes = [] }) => {
+
+const _img = "https://s1.ax1x.com/2020/06/02/ttRlz6.png"
+
+export type SimpleProps = { title?: string, routes: Array<RouteItemProps>, logo?: React.ReactNode  }
+const Simple: React.SFC<SimpleProps> = (props) => {
+  const { title,logo = _img, routes = [] } = props
   return (
-    <div className="layout">
+    <div className="simple simple-layout">
       <Router>
-        <div className="sidebar">
-          <div className="logo">
-            <a href="/" className="simple-text logo-normal">
-              {title || 'Development'}
-            </a>
+        <div className="simple-sidebar">
+          <div>
+            <NavLink to="/" className="simple-sidebar-header">
+              <div className="simple-logo" style={typeof logo === "string" ? { backgroundImage: `url(${logo})`} : {}}>{typeof logo !== 'string' ? logo : ''}</div> 
+              <p>{title || 'Development'}</p>
+            </NavLink>
           </div>
           <div className="sidebar-wrapper" >
             <ul className="nav">
               {
-                routes.map(item => (
-                  <li className="nav-item"  key={item.path}>
-                    <NavLink className="nav-link" activeClassName='active' to={item.path}>
-                      <i className="nav-icon">{item.icon}</i>
-                      <p>{item.label}</p>
+                routes.map(({path, icon: Icon, name}) => (
+                  <li className="nav-item"  key={path}>
+                    <NavLink className="nav-link" activeClassName='active' to={path}>
+                      { 
+                       typeof Icon === 'function' || typeof Icon === 'object' ?  React.createElement(Icon as any, { className: 'simple-icon'})  : null
+                      }
+                      <p>{name}</p>
                     </NavLink>
                   </li>
                 ))
@@ -38,9 +45,9 @@ const Simple: React.SFC<SimpleProps> = ({ title, routes = [] }) => {
         <div className="content">
           <Switch>
             {
-              routes.map(({ path, App }) => (
+              routes.map(({ path, component: Com }) => (
                 <Route path={path} key={path}>
-                  <App />
+                  <Com {...props} />
                 </Route>
               ))
             }

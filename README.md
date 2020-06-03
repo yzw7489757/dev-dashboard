@@ -18,15 +18,18 @@ Simple(IMaterial, dom?) //default #root
 type SimpleProps = { 
   title?: string, 
   routes: Array<{
-    label: string,
+    name: string,
     icon: React.ReactNode,
     path: string,
-    App: React.FunctionComponent | React.ComponentClass
+    component: React.FunctionComponent | React.ComponentClass
   }> 
 }
 ```
+![alt="星彩"](https://s1.ax1x.com/2020/06/03/ta7t56.jpg);
+
 
 ### 单路由星彩风格
+
 ```ts 
 import { Material } from 'dev-dashoard';
 // or
@@ -49,6 +52,7 @@ type IMaterial = {
   [key: string]: any;
 }
 ```
+![alt="星彩"](https://s1.ax1x.com/2020/06/03/ta7UPK.jpg);
 
 Material-ui/icons Map [https://material-ui.com/components/material-icons/](https://material-ui.com/components/material-icons/)
 
