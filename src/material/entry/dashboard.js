@@ -13,33 +13,45 @@ import 'material@assets/css/material-dashboard-react.css';
 
 let ps;
 
+const getLocalStroage = (name) => localStorage.getItem('dashboard' + name)
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-// eslint-disable-next-line react/prop-types
 const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
   const mainPanel = React.createRef();
   const [image, setImage] = React.useState(
-    "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg"
+    getLocalStroage('image') || "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg"
   );
-  const [color, setColor] = React.useState("blue");
+  const [color, setColor] = React.useState(getLocalStroage('color') ||"blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleFixedClick = () => {
+  const handleFixedClick = React.useCallback(() => {
     if (fixedClasses === "dropdown") {
       setFixedClasses("dropdown show");
     } else {
       setFixedClasses("dropdown");
     }
-  };
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-  const resizeFunction = () => {
+  }, [fixedClasses]);
+
+  const handleDrawerToggle = React.useCallback(() => {
+    setMobileOpen(pre => !pre);
+  }, []);
+
+  const resizeFunction = React.useCallback(() => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
     }
-  };
-  // initialize and destroy the PerfectScrollbar plugin
+  }, [window.innerWidth]);
+
+  const handleImageClick = React.useCallback((img) => {
+    setImage(img)
+    localStorage.setItem('dashboard-image', img)
+  },[])
+
+  const handleColorClick = React.useCallback((cr) => {
+    setColor(cr)
+    localStorage.setItem('dashboard-color', cr)
+  },[])
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -49,14 +61,14 @@ const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
       document.body.style.overflow = "hidden";
     }
     window.addEventListener("resize", resizeFunction);
-    // Specify how to clean up after this effect:
-    return function clean() {
+    return () => {
       if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
       }
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -86,8 +98,8 @@ const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
         </div>
         <Footer />
         <FixedPlugin
-          handleImageClick={setImage}
-          handleColorClick={setColor}
+          handleImageClick={handleImageClick}
+          handleColorClick={handleColorClick}
           bgColor={color}
           bgImage={image}
           handleFixedClick={handleFixedClick}

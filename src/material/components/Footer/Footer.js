@@ -32,7 +32,7 @@ export default function Footer(props) {
         </div>
         <p className={classes.right}>
           <span>
-            &copy; {1900 + new Date().getYear()}{" "}, made with love for a better web 💯&nbsp;
+            &copy; {1900 + new Date().getYear()}{" "}, Do better web 💯&nbsp;
           </span>
         </p>
       </div>

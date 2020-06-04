@@ -11,9 +11,9 @@ By [creative](https://www.creative-tim.com/);
 ```ts 
 import { Simple } from 'dev-dashoard';
 
-Simple(IMaterial, dom?) //default #root
+<Simple />
 ```
-
+Props
 ``` ts
 type SimpleProps = { 
   title?: string, 
@@ -35,9 +35,9 @@ import { Material } from 'dev-dashoard';
 // or
 import Material from 'dev-dashoard';
 
-Material(IMaterial, dom?) //default #root
+<Material />
 ```
-
+porps
 ``` ts
 type IMaterial = {
   routes: {
