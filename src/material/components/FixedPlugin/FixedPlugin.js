@@ -4,10 +4,10 @@ import React, { useState, useEffect, useMemo} from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-const imagine1 = "https://s1.ax1x.com/2020/06/02/tt24qe.jpg";
-const imagine2 = "https://s1.ax1x.com/2020/06/02/tt2oad.jpg";
-const imagine3 = "https://s1.ax1x.com/2020/06/02/tt2hrD.jpg";
-const imagine4 = "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg";
+const imagine1 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg";
+const imagine2 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-2.jpg";
+const imagine3 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-3.jpg";
+const imagine4 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-4.jpg";
 
 function useDraggable(el) {
   const [{ dx, dy }, setOffset] = useState({ dx: 0, dy: 0 });
