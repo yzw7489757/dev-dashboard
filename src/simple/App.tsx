@@ -9,14 +9,14 @@ type RouteItemProps = {
   component: React.FunctionComponent | React.ComponentClass
 }
 
-const _img = "https://s1.ax1x.com/2020/06/02/ttRlz6.png"
+const _img = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg"
 
-export type SimpleProps = { title?: string, routes: Array<RouteItemProps>, logo?: React.ReactNode  }
+export type SimpleProps = { basePath?: string, title?: string, routes: Array<RouteItemProps>, logo?: React.ReactNode  }
 const Simple: React.SFC<SimpleProps> = (props) => {
-  const { title,logo = _img, routes = [] } = props
+  const { title,logo = _img, routes = [], basePath='' } = props
   return (
     <div className="simple simple-layout">
-      <Router>
+      <Router basename={`/${basePath}`}>
         <div className="simple-sidebar">
           <div>
             <NavLink to="/" className="simple-sidebar-header">

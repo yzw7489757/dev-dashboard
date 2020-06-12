@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
@@ -27,7 +27,6 @@ function useDraggable(el) {
         const newDx = e.pageX - startX;
         const newDy = e.pageY - startY;
         setOffset({ dx: newDx, dy: newDy });
-        console.log(newDx, newDy)
       };
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', () => {

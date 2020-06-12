@@ -3,7 +3,6 @@ import { Switch, Route , Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import DashBoard from './dashboard';
 
-const hist = createBrowserHistory();
 export type MaterialSingleProps = {
   routes: {
     path: string,
@@ -13,11 +12,17 @@ export type MaterialSingleProps = {
   }[],
   title?: React.ReactNode,
   logo?: React.ReactNode,
+  basePath?: string,
 
   [key: string]: any;
 }
 
 const MaterialSingle = (props: MaterialSingleProps) => {
+
+  const hist = React.useMemo(() => createBrowserHistory({
+    basename: `/${props.basePath || ''}`
+  }), [])
+
   return (
     <Router history={hist}>
       <Switch>

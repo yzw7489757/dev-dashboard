@@ -16,10 +16,10 @@ let ps;
 const getLocalStroage = (name) => localStorage.getItem('dashboard' + name)
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
+const Dashboard = ({ classes, routes = [], logo, title, showFooter = false, ...rest }) => {
   const mainPanel = React.createRef();
   const [image, setImage] = React.useState(
-    getLocalStroage('image') || "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg"
+    getLocalStroage('image') || "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg"
   );
   const [color, setColor] = React.useState(getLocalStroage('color') ||"blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
@@ -74,7 +74,7 @@ const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
       <Sidebar
         routes={routes}
         logoText={title || "Development"}
-        logo={logo || "https://s1.ax1x.com/2020/06/02/ttRlz6.png"}
+        logo={logo || "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/logo.png"}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
@@ -96,7 +96,7 @@ const Dashboard = ({ classes, routes = [], logo, title, ...rest }) => {
             </Switch>
           </div>
         </div>
-        <Footer />
+        { showFooter && <Footer /> }
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}
