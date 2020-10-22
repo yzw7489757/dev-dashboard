@@ -1,6 +1,6 @@
 {
   "name": "dev-dashboard",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "local debugging dashboard",
   "main": "lib/index.js",
   "scripts": {
@@ -10,6 +10,10 @@
     "build:typings": "tsc -p tsconfig.d.json",
     "build": "rm -rf lib/ && npm run build:typings && npm run build:umd",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
+    "release": "standard-version --release-as",
+    "publish:major": "npm run release -- major && tnpm publish",
+    "publish:minor": "npm run release -- minor && tnpm publish",
+    "publish:patch": "npm run release -- patch && tnpm publish",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -85,6 +89,7 @@
     "less-loader": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "~1.17.0",
+    "standard-version": "^9.0.0",
     "style-loader": "^1.0.0",
     "tslib": "^2.0.0",
     "typescript": "^3.7.3",
