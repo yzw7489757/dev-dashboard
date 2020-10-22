@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Flight, GitHub, Group,InsertChart} from '@material-ui/icons';
-import { Simple, Material } from '../lib/index'
+import { Simple, Material } from '../src/index'
 import demo from './demo'
 
 ReactDOM.render(<Material routes={[

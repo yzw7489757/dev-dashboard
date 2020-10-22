@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route , Router } from "react-router-dom";
+import { Switch, Route , HashRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import DashBoard from './dashboard';
 
@@ -24,11 +24,11 @@ const MaterialSingle = (props: MaterialSingleProps) => {
   }), [])
 
   return (
-    <Router history={hist}>
+    <HashRouter basename={`/${props.basePath || ''}`}>
       <Switch>
         <Route path="/" component={(p) => <DashBoard {...p} {...props} />} />
       </Switch>
-    </Router>
+    </HashRouter>
   );
 };
 

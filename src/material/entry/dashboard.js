@@ -91,7 +91,7 @@ const Dashboard = ({ classes, routes = [], logo, title, showFooter = false, ...r
           <div className={classes.container}>
             <Switch>
               {routes.map((prop, key) => (
-                <Route path={prop.path} component={prop.component} key={key} />
+                <Route exact path={prop.path} component={prop.component} key={key} />
               ))}
             </Switch>
           </div>
