@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
-import MaterialSingle, { MaterialSingleProps} from './material/entry/App';
+import MaterialSingle, { MaterialSingleProps } from './material/entry/App';
 import SimpleSingle, { SimpleProps } from './simple/App';
 
 export const Material = (props: MaterialSingleProps) => {
@@ -12,12 +11,12 @@ export const Material = (props: MaterialSingleProps) => {
       document.head.removeChild(icons)
     }
   }, [])
-  
-  return <MaterialSingle {...props}/>
+
+  return <MaterialSingle {...props} />
 }
 
 export const Simple = (props: SimpleProps) => {
-  return <SimpleSingle {...props}/>
+  return <SimpleSingle {...props} />
 }
 
 function createLink(href: string) {

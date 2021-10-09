@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { withStyles } from "@material-ui/core/styles";
@@ -21,7 +21,7 @@ const Dashboard = ({ classes, routes = [], logo, title, showFooter = false, ...r
   const [image, setImage] = React.useState(
     getLocalStroage('image') || "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg"
   );
-  const [color, setColor] = React.useState(getLocalStroage('color') ||"blue");
+  const [color, setColor] = React.useState(getLocalStroage('color') || "blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -46,12 +46,12 @@ const Dashboard = ({ classes, routes = [], logo, title, showFooter = false, ...r
   const handleImageClick = React.useCallback((img) => {
     setImage(img)
     localStorage.setItem('dashboard-image', img)
-  },[])
+  }, [])
 
   const handleColorClick = React.useCallback((cr) => {
     setColor(cr)
     localStorage.setItem('dashboard-color', cr)
-  },[])
+  }, [])
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -90,13 +90,14 @@ const Dashboard = ({ classes, routes = [], logo, title, showFooter = false, ...r
         <div className={classes.content}>
           <div className={classes.container}>
             <Switch>
-              {routes.map((prop, key) => (
-                <Route exact path={prop.path} component={prop.component} key={key} />
+              {routes.map(({ path, component: Com }) => (
+                <Route exact path={path} key={path} component={Com}></Route>
               ))}
+              <Redirect to={routes[0]?.path || '/'} />
             </Switch>
           </div>
         </div>
-        { showFooter && <Footer /> }
+        {showFooter && <Footer />}
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}

@@ -4,7 +4,7 @@ import { Flight, GitHub, Group,InsertChart} from '@material-ui/icons';
 import { Simple, Material } from '../src/index'
 import demo from './demo'
 
-ReactDOM.render(<Material routes={[
+ReactDOM.render(<Material useHash routes={[
   {
     path: '/demo',
     name: 'demo',
