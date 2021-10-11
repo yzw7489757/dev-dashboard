@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useMemo } from "react"
 import {
   BrowserRouter,
   HashRouter,
@@ -7,6 +7,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom"
+import defaultLogo from "./logo.svg"
+import Layout from "./layout"
 import "./index.less"
 
 type RouteItemProps = {
@@ -16,8 +18,6 @@ type RouteItemProps = {
   component: React.FunctionComponent | React.ComponentClass
 }
 
-const _img =
-  "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg"
 export type SimpleProps = {
   useHash?: boolean
   basePath?: string
@@ -26,35 +26,34 @@ export type SimpleProps = {
   logo?: React.ReactNode
 }
 
-const Simple: React.SFC<SimpleProps> = props => {
-  const {
-    title,
-    logo = _img,
-    routes = [],
-    useHash = false,
-    basePath = ""
-  } = props
-  
+const Simple: React.FC<SimpleProps> = props => {
+  const { title, logo, routes = [], useHash = false, basePath = "" } = props
+
   const Router = useMemo(() => (useHash ? HashRouter : BrowserRouter), [
     useHash
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ]) as any
 
   return (
     <div className="simple simple-layout">
-      <Router basename={['', basePath].filter(Boolean).join('/')}>
+      <Router basename={basePath || "/"}>
         <div className="simple-sidebar">
           <div>
             <NavLink to="/" className="simple-sidebar-header">
-              <div
-                className="simple-logo"
-                style={
-                  typeof logo === "string"
-                    ? { backgroundImage: `url(${logo})` }
-                    : {}
-                }
-              >
-                {typeof logo !== "string" ? logo : ""}
-              </div>
+              {logo ? (
+                <div
+                  className="simple-logo"
+                  style={
+                    typeof logo === "string"
+                      ? { backgroundImage: `url(${logo})` }
+                      : {}
+                  }
+                >
+                  {typeof logo !== "string" ? logo : ""}
+                </div>
+              ) : (
+                <img className="simple-logo" src={defaultLogo} alt="" />
+              )}
               <p>{title || "Development"}</p>
             </NavLink>
           </div>
@@ -67,11 +66,9 @@ const Simple: React.SFC<SimpleProps> = props => {
                     activeClassName="active"
                     to={path}
                   >
-                    {typeof Icon === "function" || typeof Icon === "object"
-                      ? React.createElement(Icon as any, {
-                          className: "simple-icon"
-                        })
-                      : null}
+                    {React.isValidElement(Icon)
+                      ? React.cloneElement(Icon, { className: "simple-icon" })
+                      : Icon || null}
                     <p>{name}</p>
                   </NavLink>
                 </li>
@@ -82,15 +79,19 @@ const Simple: React.SFC<SimpleProps> = props => {
         </div>
         <div className="content">
           <Switch>
-            {routes.map(({ path, component: Com }) => (
+            {routes.map(({ path, name, component: Com }) => (
               <Route
                 path={path}
                 key={path}
                 exact
-                component={() => <Com {...props} />}
+                render={innerProps => (
+                  <Layout title={name}>
+                    <Com {...props} {...innerProps} />
+                  </Layout>
+                )}
               />
             ))}
-            <Redirect to={routes[0]?.path || '/'} />
+            <Redirect to={routes[0].path || "/"} />
           </Switch>
         </div>
       </Router>
